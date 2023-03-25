@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/authentication/login_screen.dart';
+import 'package:tiktok/features/authentication/widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
+
+  void onLoginTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      //이렇게 push를 하면 화면을 기존 화면 위에 쌓는 것임.
+      // Sign up 누르면 Sign up 화면 뜨고 거기서 Log in 누르면 그 위에 Log in 화면 덮어지고 팬케이크 쌓듯이 무한반복
+      // 그래서 어느 지점에서는 멈춰야됨. loginscreen 에서는 push가 아니라 뒤로가기를 하는 것.
+      builder: (context) => const LoginScreen(),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +42,9 @@ class SignUpScreen extends StatelessWidget {
                   color: Colors.black45,
                 ),
                 textAlign: TextAlign.center,
-              )
+              ),
+              Gaps.v40,
+              AuthButton(text: "Use phone or email"),
             ],
           ),
         ),
@@ -48,11 +61,14 @@ class SignUpScreen extends StatelessWidget {
             children: [
               const Text("Already have an account?"),
               Gaps.h5,
-              Text(
-                "Log in",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).primaryColor,
+              GestureDetector(
+                onTap: () => onLoginTap(context),
+                child: Text(
+                  "Log in",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
               ),
             ],
