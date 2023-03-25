@@ -7,7 +7,7 @@ import 'package:tiktok/features/authentication/widgets/auth_button.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  void onSignUpTap(BuildContext context) {
+  void _onSignUpTap(BuildContext context) {
     Navigator.of(context).pop();
     // Naivgator의 가장 상단 화면, 유저가 현재 보고 있는 현재 화면을 스택에서 제거해줌.
     // 스택에는 push 와 pop이 있는데, push는 기존 팬케잌 위에 새 팬케잌을 두는 것. (팬케잌=화면)
@@ -54,7 +54,7 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade100,
+        color: Colors.grey.shade50,
         elevation: 5,
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -66,7 +66,7 @@ class LoginScreen extends StatelessWidget {
               const Text("Don't have an account?"),
               Gaps.h5,
               GestureDetector(
-                onTap: () => onSignUpTap(context),
+                onTap: () => _onSignUpTap(context),
                 child: Text(
                   "Sign up",
                   style: TextStyle(

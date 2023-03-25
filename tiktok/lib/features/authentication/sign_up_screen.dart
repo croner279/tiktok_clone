@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/authentication/email_screen.dart';
 import 'package:tiktok/features/authentication/login_screen.dart';
 import 'package:tiktok/features/authentication/widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  void onLoginTap(BuildContext context) {
+  void _onLoginTap(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       //이렇게 push를 하면 화면을 기존 화면 위에 쌓는 것임.
       // Sign up 누르면 Sign up 화면 뜨고 거기서 Log in 누르면 그 위에 Log in 화면 덮어지고 팬케이크 쌓듯이 무한반복
@@ -17,18 +18,27 @@ class SignUpScreen extends StatelessWidget {
     ));
   }
 
+  void _onEmailTap(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const EmailScreen(),
+      ),
+    );
+  } //Dart는 다른 언어의 public, private, protected 같은 접근 지정자가 없어서 메서드를 private으로 선언하려면
+  // 그냥 메서드나 프로퍼티 앞에 _를 붙여줘라.
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: Sizes.size40,
           ),
           child: Column(
             children: [
               Gaps.v80,
-              Text(
+              const Text(
                 "Sign up for WoolTok",
                 style: TextStyle(
                   fontSize: Sizes.size24,
@@ -36,7 +46,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-              Text(
+              const Text(
                 "Create a profile, follow other accounts, make your own videos and more.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -45,11 +55,14 @@ class SignUpScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
-              AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.user),
-                  text: "Use email & password"),
+              GestureDetector(
+                onTap: () => _onEmailTap(context),
+                child: const AuthButton(
+                    icon: FaIcon(FontAwesomeIcons.user),
+                    text: "Use email & password"),
+              ),
               Gaps.v16,
-              AuthButton(
+              const AuthButton(
                   icon: FaIcon(FontAwesomeIcons.apple),
                   text: "Continue with Apple"),
             ],
@@ -57,7 +70,7 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade100,
+        color: Colors.grey.shade50,
         elevation: 5,
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -69,7 +82,7 @@ class SignUpScreen extends StatelessWidget {
               const Text("Already have an account?"),
               Gaps.h5,
               GestureDetector(
-                onTap: () => onLoginTap(context),
+                onTap: () => _onLoginTap(context),
                 child: Text(
                   "Log in",
                   style: TextStyle(
