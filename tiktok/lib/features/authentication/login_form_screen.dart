@@ -20,11 +20,12 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const InterestsScreen(),
-          ),
-        );
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const InterestsScreen(),
+            ), (route) {
+          return false; // true 를 return 하면 뒷화면 제거x. false는 전부 지운다(이전 라우트 유지 안한다).
+        });
       }
     }
     // _formKey.currentState?.validate() 와 동일 코드 : if (_formKey.currentState != null) {_formKey.currentState!.validate();}
