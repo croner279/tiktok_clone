@@ -18,15 +18,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const Center(
       child: Text('Search'),
     ),
-    const Center(
-      child: Text('Home'),
-    ),
-    const Center(
-      child: Text('Search'),
-    ),
-    const Center(
-      child: Text('Search'),
-    ),
   ];
 
   void _onTap(int index) {
@@ -40,38 +31,27 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     return Scaffold(
       body: screens[_selectedIndex] //index로 여러 화면을 조회 가능. 수퍼쿨!
       ,
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.shifting,
-          currentIndex: _selectedIndex,
-          onTap: _onTap,
-          //selectedItemColor: Theme.of(context).primaryColor,
-          items: const [
-            BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.house),
-                label: "Home",
-                tooltip: "What are you?",
-                backgroundColor: Colors.amber),
-            BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-                label: "Search",
-                tooltip: "What are you?",
-                backgroundColor: Colors.blue),
-            BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-                label: "Search",
-                tooltip: "What are you?",
-                backgroundColor: Colors.pink),
-            BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-                label: "Search",
-                tooltip: "What are you?",
-                backgroundColor: Colors.yellow),
-            BottomNavigationBarItem(
-                icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-                label: "Search",
-                tooltip: "What are you?",
-                backgroundColor: Colors.teal),
-          ]),
+      bottomNavigationBar: NavigationBar(
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onTap,
+        destinations: const [
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.house,
+              color: Colors.white,
+            ),
+            label: 'house',
+          ),
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: Colors.white,
+            ),
+            label: 'search',
+          ),
+        ],
+      ),
     );
   }
 }
