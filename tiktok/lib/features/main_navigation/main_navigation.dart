@@ -14,14 +14,6 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  final screens = [
-    StfScreen(key: GlobalKey()),
-    StfScreen(key: GlobalKey()),
-    Container(),
-    StfScreen(key: GlobalKey()),
-    StfScreen(key: GlobalKey()),
-  ];
-
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;
@@ -31,7 +23,24 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens.elementAt(_selectedIndex), //screens[_selectedIndex]랑 동일함
+      body: Stack(children: [
+        Offstage(
+          offstage: _selectedIndex != 0, //첫번째 화면은 selectedIndex가 0이 아닐 때 숨겨짐.
+          child: const StfScreen(),
+        ),
+        Offstage(
+          offstage: _selectedIndex != 1,
+          child: const StfScreen(),
+        ),
+        Offstage(
+          offstage: _selectedIndex != 3,
+          child: const StfScreen(),
+        ),
+        Offstage(
+          offstage: _selectedIndex != 4,
+          child: const StfScreen(),
+        ),
+      ]), //screens[_selectedIndex]랑 동일함
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(
