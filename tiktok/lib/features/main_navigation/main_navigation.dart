@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/main_navigation/widgets/nav_tab.dart';
+import 'package:tiktok/features/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok/features/main_navigation/widgets/stf_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -18,6 +20,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void _onPostVideoButtonTap() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => Scaffold(
+          appBar: AppBar(
+        title: const Text(
+          'Record Video',
+        ),
+      )),
+      fullscreenDialog: true, //전체화면으로 들어간다.
+    ));
   }
 
   @override
@@ -62,6 +76,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                   selectedIcon: FontAwesomeIcons.solidCompass,
                   onTap: () => _onTap(1),
                 ),
+                Gaps.h24,
+                GestureDetector(
+                  onTap: _onPostVideoButtonTap,
+                  child: const PostVideoButton(),
+                ), //UI는 Post_video_button.dart에서 하고, 여기서는 동작을 짜자.
+                Gaps.h24,
                 NavTab(
                   text: "Inbox",
                   isSelected: _selectedIndex == 3,
