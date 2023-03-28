@@ -5,6 +5,7 @@ import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok/features/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok/features/main_navigation/widgets/stf_screen.dart';
+import 'package:tiktok/features/videos/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -40,19 +41,19 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       body: Stack(children: [
         Offstage(
           offstage: _selectedIndex != 0, //첫번째 화면은 selectedIndex가 0이 아닐 때 숨겨짐.
-          child: const StfScreen(),
+          child: const VideoTimelineScreen(),
         ),
         Offstage(
           offstage: _selectedIndex != 1,
-          child: const StfScreen(),
+          child: Container(),
         ),
         Offstage(
           offstage: _selectedIndex != 3,
-          child: const StfScreen(),
+          child: Container(),
         ),
         Offstage(
           offstage: _selectedIndex != 4,
-          child: const StfScreen(),
+          child: Container(),
         ),
       ]), //screens[_selectedIndex]랑 동일함
       bottomNavigationBar: BottomAppBar(
