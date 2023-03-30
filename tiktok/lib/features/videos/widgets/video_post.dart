@@ -59,7 +59,8 @@ class _VideoPostState extends State<VideoPost>
     );
     _animationController.addListener(() {
       //addListener를 해줘야 계속 build메소드 호출. 이거 없으면 1.0에서 1.5로 중간부분 없이 바로 점프해버림
-      setState(() {}); //AnimationController에서 숫자가 바뀔때 마다 setState 해줌.
+      setState(
+          () {}); //AnimationController에서 숫자가 바뀔때 마다 setState 해줌. setState는 build메소드를 호출하고, 메소드는 가장 최신 값으로 rebuild 해줌
     });
   }
 
@@ -111,8 +112,15 @@ class _VideoPostState extends State<VideoPost>
             child: IgnorePointer(
               //아이콘에 보내는 클릭은 무시. 위의 GestureDetector만 받도록 함
               child: Center(
-                child: Transform.scale(
-                  scale: _animationController.value,
+                child: AnimatedBuilder(
+                  animation:
+                      _animationController, //_animationController의 값이 변할때마다 실행됨
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child,
+                    );
+                  }, //animate 할 것과 리스너를 분리해놔서 더 편함.
                   child: AnimatedOpacity(
                     duration: _animationDuration,
                     opacity: _isPaused ? 1 : 0,
