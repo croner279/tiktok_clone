@@ -53,6 +53,10 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: _onRefresh,
+      displacement: 50, //refresh indicator의 위치(위에서 얼만큼 떨어져있을지)
+      edgeOffset: 20, //시작점
+      color: Theme.of(context).primaryColor,
+      strokeWidth: 3,
       child: PageView.builder(
         controller: _pageController,
         scrollDirection: Axis.vertical,
