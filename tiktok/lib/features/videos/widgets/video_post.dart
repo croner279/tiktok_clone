@@ -22,6 +22,7 @@ class VideoPost extends StatefulWidget {
 
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
+  //with는 그 클래스의 메서드와 속성 전부 가져오는 것(클래스 복사하기)
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.mp4");
   final Duration _animationDuration = const Duration(milliseconds: 200);
@@ -51,7 +52,10 @@ class _VideoPostState extends State<VideoPost>
     _initVideoPlayer();
 
     _animationController = AnimationController(
-      vsync: this,
+      vsync:
+          this, //vsync "prevents offscreen animation from consuming unnecessary resources"
+      //this는 이 클래스 자체. 위의 Mixin에는 ticker가 있는데 이 ticekr는 controller function을 애니메이션 프레임마다 실행함(vsync에 의해).
+      // resource를 많이 잡아먹긴 하지만 Single..Mixin은 화면이 enable 될때만 동영상 작동시키므로 괜찮음.
       lowerBound: 1.0,
       upperBound: 1.5,
       value: 1.5,
