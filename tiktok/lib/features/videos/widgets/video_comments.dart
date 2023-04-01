@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 
 class VideoComments extends StatefulWidget {
@@ -38,11 +39,68 @@ class _VideoCommentsState extends State<VideoComments> {
                 icon: const FaIcon(FontAwesomeIcons.xmark))
           ],
         ),
-        body: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) => Container(
-            child: const Text('Im a comments'),
+        body: ListView.separated(
+          padding: const EdgeInsets.symmetric(
+            vertical: Sizes.size10,
+            horizontal: Sizes.size16,
           ),
+          separatorBuilder: (context, index) => Gaps.v20,
+          itemCount: 10,
+          itemBuilder: (context, index) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const CircleAvatar(
+                radius: 18,
+                child: Text('용쨩'),
+              ),
+              Gaps.h16,
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '용쨩',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: Sizes.size14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Gaps.v4,
+                    Text('♡ㅁ♥')
+                  ],
+                ),
+              ),
+              Gaps.h10,
+              Column(
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.heart,
+                    color: Colors.grey.shade500,
+                    size: Sizes.size20,
+                  ),
+                  Gaps.v2,
+                  Text(
+                    '52.2K',
+                    style: TextStyle(
+                      color: Colors.grey.shade500,
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.white,
+          child: Row(children: [
+            CircleAvatar(
+              radius: 18,
+              backgroundColor: Colors.grey.shade500,
+              foregroundColor: Colors.white,
+              child: const Text('용쨩'),
+            )
+          ]),
         ),
       ),
     );
