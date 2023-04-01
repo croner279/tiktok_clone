@@ -13,6 +13,8 @@ class VideoComments extends StatefulWidget {
 class _VideoCommentsState extends State<VideoComments> {
   bool _isWriting = false;
 
+  final ScrollController _scrollController = ScrollController();
+
   void _onClosePressed() {
     Navigator.of(context).pop();
   }
@@ -60,57 +62,63 @@ class _VideoCommentsState extends State<VideoComments> {
           onTap: _stopWriting,
           child: Stack(
             children: [
-              ListView.separated(
-                padding: const EdgeInsets.symmetric(
-                  vertical: Sizes.size10,
-                  horizontal: Sizes.size16,
-                ),
-                separatorBuilder: (context, index) => Gaps
-                    .v20, //.separated 메소드를 통해 항목 사이에 구분선 추가 가능. separatorBuilder 속성 사용해서 구분 선 그리는 위젯 지정 가능.
-                itemCount: 10,
-                itemBuilder: (context, index) => Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const CircleAvatar(
-                      radius: 18,
-                      child: Text('용쨩'),
-                    ),
-                    Gaps.h16,
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '용쨩',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: Sizes.size14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          Gaps.v4,
-                          Text('♡ㅁ♥')
-                        ],
+              Scrollbar(
+                child: ListView.separated(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.only(
+                    top: Sizes.size10,
+                    bottom: Sizes
+                        .size96, //comment가 길어질 수 있는데, bottomAppbar가 이걸 가리고 있음. Stack으로 판을 짰기 때문에 생기는 버그임
+                    left: Sizes.size16,
+                    right: Sizes.size16,
+                  ),
+                  separatorBuilder: (context, index) => Gaps
+                      .v20, //.separated 메소드를 통해 항목 사이에 구분선 추가 가능. separatorBuilder 속성 사용해서 구분 선 그리는 위젯 지정 가능.
+                  itemCount: 10,
+                  itemBuilder: (context, index) => Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const CircleAvatar(
+                        radius: 18,
+                        child: Text('용쨩'),
                       ),
-                    ),
-                    Gaps.h10,
-                    Column(
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.heart,
-                          color: Colors.grey.shade500,
-                          size: Sizes.size20,
+                      Gaps.h16,
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '용쨩',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: Sizes.size14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Gaps.v4,
+                            Text('♡ㅁ♥')
+                          ],
                         ),
-                        Gaps.v2,
-                        Text(
-                          '52.2K',
-                          style: TextStyle(
+                      ),
+                      Gaps.h10,
+                      Column(
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.heart,
                             color: Colors.grey.shade500,
+                            size: Sizes.size20,
                           ),
-                        )
-                      ],
-                    )
-                  ],
+                          Gaps.v2,
+                          Text(
+                            '52.2K',
+                            style: TextStyle(
+                              color: Colors.grey.shade500,
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Positioned(
