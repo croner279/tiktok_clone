@@ -86,6 +86,9 @@ class _VideoPostState extends State<VideoPost>
       // 새로고침하고 놔두면 다시 재생이 됨...
       _videoPlayerController.play();
     }
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause(); // 동영상이 재생되고 있는 상태 + 화면에서 보이지 않게 되면 Pause를 한다.
+    }
   }
 
   void _onTogglePause() {
