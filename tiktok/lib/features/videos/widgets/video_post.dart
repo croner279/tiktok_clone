@@ -106,6 +106,8 @@ class _VideoPostState extends State<VideoPost>
       _onTogglePause();
     }
     await showModalBottomSheet(
+      isScrollControlled:
+          true, //설명에 나와있음. 니가 bottomSheet로 Listview 를 쓸거면 이거 true로 해놔라
       backgroundColor: Colors
           .transparent, // 이걸 해놔야 이제 Scaffold의 색을 보는 것임. 이제 Scaffold에 borderRadius 적용 가능
       context: context,

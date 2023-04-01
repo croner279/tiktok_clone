@@ -37,6 +37,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:
+          false, //comment 창에서 키보드를 열어도 영상이 찌그러지지 않게(Scaffold가 body 크기를 자동으로 조정) false로 고정시켜줌
       backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
       body: Stack(children: [
         Offstage(
