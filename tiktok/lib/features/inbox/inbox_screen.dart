@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/features/inbox/activity_screen.dart';
 
 class InboxScreen extends StatelessWidget {
   const InboxScreen({super.key});
 
   void _onDmPressed() {}
+
+  void _onActivityTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const ActivityScreen(),
+    )); // ctrl + spacebar 누르면 메소드 단축키 뜬다.
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class InboxScreen extends StatelessWidget {
         children: [
           ListTile(
             //여러 항목이 있는 list만들 때 꿀위젯임. 별의 별 메소드 있으니 보세요.
-            onTap: () {},
+            onTap: () => _onActivityTap(context),
             title: const Text(
               'Activity',
               style: TextStyle(

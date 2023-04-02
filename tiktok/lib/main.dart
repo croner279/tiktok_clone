@@ -18,6 +18,8 @@ class TikTokApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
+        splashColor: Colors.transparent, //splashcolor를 사실상 꺼버림.
+        //highlightColor: Colors.transparent 이건 클릭 효과를 꺼버림
         appBarTheme: const AppBarTheme(
             centerTitle: true,
             foregroundColor: Colors.black,
