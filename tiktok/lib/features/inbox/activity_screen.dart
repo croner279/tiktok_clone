@@ -25,6 +25,8 @@ class _ActivityScreenState extends State<ActivityScreen>
     {"title": "From TikTok", "icon": FontAwesomeIcons.tiktok}
   ];
 
+  bool _showBarrier = false;
+
   late final AnimationController _animationController = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 100),
@@ -45,18 +47,29 @@ class _ActivityScreenState extends State<ActivityScreen>
     end: Offset.zero,
   ).animate(_animationController);
 
+  late final Animation<Color?> _barrierAnimation = ColorTween(
+    begin: Colors.transparent,
+    end: Colors.black38,
+  ).animate(_animationController);
+
   void _onDismissed(String notification) {
     _notifications.remove(notification);
     setState(() {});
   }
 
-  void _onTitleTap() {
+  void _toggleAnimation() async {
     if (_animationController.isCompleted) {
-      _animationController.reverse();
+      await _animationController.reverse();
       // 위 두개 코드 없으면, All Acitivty 한번밖에 못돌림.
     } else {
       _animationController.forward();
+      //reverse, forward 모두 futre를 반환하는데 이건 애니메이션이 끝나야 완료됨.
+      // 그래서 All activity 누르면 setState -> build 메소드를 기반으로 작동되는 barrier는 바로 꺼지는데, animation은 계속 진행되는 문제가 발생. 그래서 그 차이를 맞추기 위해 await + async를 써줌
+      // forward 앞에는 await 안써줌. All activity 모달 창 열자마자 barrier 켜졌으면 해서. 근데 위로 올릴 때는 아님.
     }
+    setState(() {
+      _showBarrier = !_showBarrier;
+    });
   }
 
   @override
@@ -64,7 +77,7 @@ class _ActivityScreenState extends State<ActivityScreen>
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: _onTitleTap,
+          onTap: _toggleAnimation,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -181,6 +194,12 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ),
             ],
           ),
+          if (_showBarrier)
+            AnimatedModalBarrier(
+              color: _barrierAnimation,
+              dismissible: true,
+              onDismiss: _toggleAnimation, //애니메이션 초기화시켜줌. 바탕화면 누르면 다시 모달 창이 올라감
+            ),
           SlideTransition(
             position: _panelAnimation,
             child: Container(
@@ -216,7 +235,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
