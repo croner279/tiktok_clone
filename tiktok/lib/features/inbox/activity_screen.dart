@@ -10,20 +10,62 @@ class ActivityScreen extends StatefulWidget {
   State<ActivityScreen> createState() => _ActivityScreenState();
 }
 
-class _ActivityScreenState extends State<ActivityScreen> {
+class _ActivityScreenState extends State<ActivityScreen>
+    with SingleTickerProviderStateMixin {
+  // Ticker는 모든 애니메이션 프레임에서 Callback Function을 호출하는 시계임. SingleTickerMixin은 Ticker뿐만 아니라, 위젯이
+  // Widget tree에 없을 때 리소스 낭비 하지 않도록 막아줌.
   final List<String> _notifications = List.generate(20, (index) => "${index}h");
+
+  late final AnimationController _animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 100),
+  );
+  //this나 다른 instance member를 참조하려면 late을 사용해야 만 함. 그리고 위처럼 코드 작성 시 initState가 필요 없음.
+
+  late final Animation<double> _animation = Tween(
+    begin:
+        0.0, //이건 turns임. RotationTransition turn 해야 되는데 어디까지? end 1.0은 1 turn 회전하라는 것임.
+    end: 0.5,
+  ).animate(_animationController);
+// 지난번에는 1. AnimationController의 value를 수정하고 Controller에 event Listner를 추가. 그리고 setState하면 그게 build메소드 실행시키고 사용자에게 애니메이션의 각 단계를 보여줌
+// 2. Animation Builder 사용하기.
+// 그러나 이번에는 setState, Animation Builder 어떤 걸 사용하지 않아도 됨. animation Controller랑 animation <double> 리스트만 있으면 됨
 
   void _onDismissed(String notification) {
     _notifications.remove(notification);
     setState(() {});
   }
 
+  void _onTitleTap() {
+    if (_animationController.isCompleted) {
+      _animationController.reverse();
+      // 위 두개 코드 없으면, All Acitivty 한번밖에 못돌림.
+    } else {
+      _animationController.forward();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(_notifications);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("All Activity"),
+        title: GestureDetector(
+          onTap: _onTitleTap,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("All Activity"),
+              Gaps.h6,
+              RotationTransition(
+                turns: _animation,
+                child: const FaIcon(
+                  FontAwesomeIcons.chevronDown,
+                  size: Sizes.size14,
+                ),
+              )
+            ],
+          ),
+        ),
       ),
       body: ListView(
         children: [
