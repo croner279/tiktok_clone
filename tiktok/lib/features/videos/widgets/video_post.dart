@@ -80,7 +80,13 @@ class _VideoPostState extends State<VideoPost>
     super.dispose();
   }
 
+// visibility가 변하면 visibilityDetector가 뭘 작동시키는데, Detector가 visibilityChanged 메소드를 작동시키면 VideoPlayerController는 이미 삭제되어 있는 상태.
+//그래서 value.isPlaying을 불러오지 못하고, play 등을 호출하지 못함.  그래서 조건문을 추가.
+// Widget이 mount 되었는지를 알려줌. mount false면 widget이 widget Tree에서 제외되어 있다는 뜻
+
   void _onVisibilityChanged(VisibilityInfo info) {
+// mount 된 상태가 아니라면 visibility에 변화가 있더라도 아무 것도 반환하지 말아라.
+    if (!mounted) return;
     if (info.visibleFraction == 1 &&
         !_videoPlayerController.value.isPlaying &&
         !_isPaused) {
