@@ -15,15 +15,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       slivers: [
         //slivers는 Widget들의 list이지만 아무 widget이나 넣을 수 있는 건 아님.
         SliverAppBar(
+          backgroundColor: Colors.teal,
+          elevation: 1,
           floating: true,
+          pinned: true,
           stretch: true,
-          collapsedHeight: 100,
-          expandedHeight: 100,
+          snap: true,
+          collapsedHeight: 80,
+          expandedHeight: 200,
           flexibleSpace: FlexibleSpaceBar(
             stretchModes: const [
               StretchMode.blurBackground,
               StretchMode.fadeTitle,
-              StretchMode.zoomBackground,
             ],
             centerTitle: true,
             title: const Text("hello!"),
@@ -32,9 +35,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          backgroundColor: Colors.teal,
-          elevation: 1,
-        )
+        ),
+        SliverFixedExtentList(
+            delegate: SliverChildBuilderDelegate(
+                childCount: 50,
+                (context, index) => Container(
+                      color: Colors.amber[100 * (index % 9)],
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Text('Item $index')),
+                    )),
+            itemExtent: 50)
       ],
     );
   }
