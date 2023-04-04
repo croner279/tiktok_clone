@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok/constants/sizes.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -45,7 +46,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           alignment: Alignment.center,
                           child: Text('Item $index')),
                     )),
-            itemExtent: 50)
+            itemExtent: 50),
+        SliverGrid(
+            delegate: SliverChildBuilderDelegate(
+                childCount: 50,
+                (context, index) => Container(
+                    color: Colors.blue[100 * (index % 9)],
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text('Item $index')))),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 100,
+              mainAxisSpacing: Sizes.size20,
+              crossAxisSpacing: Sizes.size20,
+              childAspectRatio: 1,
+            ))
       ],
     );
   }
