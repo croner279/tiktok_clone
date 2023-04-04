@@ -2,11 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/inbox/activity_screen.dart';
+import 'package:tiktok/features/inbox/chats_screen.dart';
 
-class InboxScreen extends StatelessWidget {
+class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
 
-  void _onDmPressed() {}
+  @override
+  State<InboxScreen> createState() => _InboxScreenState();
+}
+
+class _InboxScreenState extends State<InboxScreen> {
+//Stateless Widgete에서는 메소드가 자체적인 context를 가질 수 없다. Build 메소드만이 context를 가질 수 있다.
+  void _onDmPressed() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const ChatsScreen(),
+    ));
+  }
 
   void _onActivityTap(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(

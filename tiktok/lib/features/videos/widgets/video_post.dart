@@ -26,8 +26,8 @@ class VideoPost extends StatefulWidget {
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
   //with는 그 클래스의 메서드와 속성 전부 가져오는 것(클래스 복사하기)
-  final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset("assets/videos/video.mp4");
+  late final VideoPlayerController _videoPlayerController;
+  // =    VideoPlayerController.asset("assets/videos/video.mp4");
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   late final AnimationController _animationController;
@@ -44,6 +44,8 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _initVideoPlayer() async {
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/videos/video.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true); // 영상 끝나면 반복시켜버림
     _videoPlayerController.addListener(_onVideoChange);
