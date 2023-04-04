@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -12,102 +14,123 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
       slivers: [
-        //slivers는 Widget들의 list이지만 아무 widget이나 넣을 수 있는 건 아님.
         SliverAppBar(
-          backgroundColor: Colors.teal,
-          elevation: 1,
-          floating: true,
-          pinned: true,
-          stretch: true,
-          snap: true,
-          collapsedHeight: 80,
-          expandedHeight: 200,
-          flexibleSpace: FlexibleSpaceBar(
-            stretchModes: const [
-              StretchMode.blurBackground,
-              StretchMode.fadeTitle,
-            ],
-            centerTitle: true,
-            title: const Text("hello!"),
-            background: Image.asset(
-              "assets/images/placeholder.jpg",
-              fit: BoxFit.cover,
-            ),
-          ),
+          title: const Text('울쨩몬'),
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: const FaIcon(FontAwesomeIcons.gear, size: Sizes.size20))
+          ],
         ),
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Column(
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.red,
+              const CircleAvatar(
+                  radius: 50,
+                  //foregroundImage: NetworkImage(url),
+                  child: Text('울쨩이')),
+              Gaps.v20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "@pearlisgood",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: Sizes.size16,
+                    ),
+                  ),
+                  Gaps.h5,
+                  FaIcon(
+                    FontAwesomeIcons.solidCircleCheck,
+                    color: Colors.blue.shade300,
+                    size: Sizes.size16,
+                  ),
+                ],
+              ),
+              Gaps.v24,
+              SizedBox(
+                height: Sizes.size36,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        const Text(
+                          "96",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.size16,
+                          ),
+                        ),
+                        Gaps.h5,
+                        Text(
+                          "Following",
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    //VerticalDivider는 부모 위젯의 height를 가져다 쓰기 때문에, 상위 위젯인 Row를 SizedBox로 감싸서 height를 지정해줘야 함.
+                    VerticalDivider(
+                      width: Sizes.size32,
+                      thickness: Sizes.size1,
+                      color: Colors.grey.shade400,
+                      indent: Sizes.size12,
+                      endIndent: Sizes.size12,
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "10M",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.size16,
+                          ),
+                        ),
+                        Gaps.h5,
+                        Text(
+                          "Followers",
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    VerticalDivider(
+                      width: Sizes.size32,
+                      thickness: Sizes.size1,
+                      color: Colors.grey.shade400,
+                      indent: Sizes.size12,
+                      endIndent: Sizes.size12,
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "197M",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: Sizes.size16,
+                          ),
+                        ),
+                        Gaps.h5,
+                        Text(
+                          "Likes",
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               )
             ],
           ),
-        ),
-        SliverFixedExtentList(
-            delegate: SliverChildBuilderDelegate(
-                childCount: 50,
-                (context, index) => Container(
-                      color: Colors.amber[100 * (index % 9)],
-                      child: Align(
-                          alignment: Alignment.center,
-                          child: Text('Item $index')),
-                    )),
-            itemExtent: 50),
-        SliverPersistentHeader(
-          delegate: CustomDelegate(),
-          pinned: true,
-        ),
-        SliverGrid(
-            delegate: SliverChildBuilderDelegate(
-                childCount: 50,
-                (context, index) => Container(
-                    color: Colors.blue[100 * (index % 9)],
-                    child: Align(
-                        alignment: Alignment.center,
-                        child: Text('Item $index')))),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 100,
-              mainAxisSpacing: Sizes.size20,
-              crossAxisSpacing: Sizes.size20,
-              childAspectRatio: 1,
-            ))
+        )
       ],
     );
-  }
-}
-
-// 아래 클래스는 직접 수작업으로 만들어줘야함. Delegate Class extends 해서
-class CustomDelegate extends SliverPersistentHeaderDelegate {
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: Colors.indigo,
-      child: const FractionallySizedBox(
-        heightFactor: 1,
-        child: Center(
-          child: Text(
-            'Title!!',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  double get maxExtent => 100;
-
-//밑으로 스크롤링 하다보면 헤더가 줄어들거나 늘어남.
-  @override
-  double get minExtent => 100;
-
-//flutter에게 persistent header가 보여져야 되는지 알려주는 메소드
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
   }
 }
