@@ -37,6 +37,15 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
           ),
         ),
+        const SliverToBoxAdapter(
+          child: Column(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.red,
+              )
+            ],
+          ),
+        ),
         SliverFixedExtentList(
             delegate: SliverChildBuilderDelegate(
                 childCount: 50,
@@ -47,6 +56,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           child: Text('Item $index')),
                     )),
             itemExtent: 50),
+        SliverPersistentHeader(
+          delegate: CustomDelegate(),
+          pinned: true,
+        ),
         SliverGrid(
             delegate: SliverChildBuilderDelegate(
                 childCount: 50,
@@ -63,5 +76,38 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ))
       ],
     );
+  }
+}
+
+// 아래 클래스는 직접 수작업으로 만들어줘야함. Delegate Class extends 해서
+class CustomDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.indigo,
+      child: const FractionallySizedBox(
+        heightFactor: 1,
+        child: Center(
+          child: Text(
+            'Title!!',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => 100;
+
+//밑으로 스크롤링 하다보면 헤더가 줄어들거나 늘어남.
+  @override
+  double get minExtent => 100;
+
+//flutter에게 persistent header가 보여져야 되는지 알려주는 메소드
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }
