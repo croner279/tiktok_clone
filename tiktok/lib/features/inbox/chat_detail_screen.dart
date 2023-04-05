@@ -142,3 +142,17 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
     );
   }
 }
+/* 
+이 코드에서 Stack 위젯은 화면을 겹치는 레이아웃을 구현하기 위해 사용되었습니다. 
+Column 대신 Stack을 사용한 이유는 Column을 사용하면 화면의 위쪽에 ListView 위젯을 두고 아래쪽에 TextField와 Send 버튼을 배치해야 합니다. 그러나 이렇게 하면 TextField와 Send 버튼이 ListView 위젯을 가리게 되므로, 이를 해결하기 위해 Stack 위젯을 사용하여 화면을 겹치는 방식으로 구현합니다.
+Stack 위젯은 여러 개의 위젯을 겹쳐서 표시할 수 있는 위젯입니다.
+이 코드에서는 ListView 위젯과 BottomAppBar 위젯을 Stack 위젯으로 겹쳐서 표시합니다. 
+이렇게 하면 화면의 아래쪽에 TextField와 Send 버튼을 배치할 수 있으며, ListView 위젯이 가리지 않도록 
+BottomAppBar 위젯이 ListView 위젯을 덮게 됩니다.
+따라서, Stack 위젯을 사용하여 ListView 위젯과 BottomAppBar 
+위젯을 겹치는 레이아웃을 구현한 것입니다.
+
+
+ */
+
+  

@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok/features/main_navigation/main_navigation.dart';
+import 'package:flutter/services.dart';
+import 'package:tiktok/features/authentication/sign_up_screen.dart';
 
 import 'constants/sizes.dart';
 
-void main() {
+void main() async {
+  // 아래는 모든 Widget들이 engine과 연결된 것을 확실히 보장.
+  // 그리고 다음 라인으로 무조건 세로화면으로 고정시켜버림
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
   runApp(const TikTokApp());
 }
 
@@ -14,6 +22,7 @@ class TikTokApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'TikTok clone',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -30,7 +39,7 @@ class TikTokApp extends StatelessWidget {
                 fontSize: Sizes.size16 + Sizes.size2,
                 fontWeight: FontWeight.w600)),
       ),
-      home: const MainNavigationScreen(),
+      home: const SignUpScreen(),
     );
   }
 }

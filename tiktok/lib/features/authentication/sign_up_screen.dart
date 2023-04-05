@@ -29,72 +29,100 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.size40,
-          ),
-          child: Column(
-            children: [
-              Gaps.v80,
-              const Text(
-                "Sign up for WoolTok",
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Gaps.v20,
-              const Text(
-                "Create a profile, follow other accounts, make your own videos and more.",
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black45,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Gaps.v40,
-              GestureDetector(
-                onTap: () => _onEmailTap(context),
-                child: const AuthButton(
-                    icon: FaIcon(FontAwesomeIcons.user),
-                    text: "Use email & password"),
-              ),
-              Gaps.v16,
-              const AuthButton(
-                  icon: FaIcon(FontAwesomeIcons.apple),
-                  text: "Continue with Apple"),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade50,
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: Sizes.size32,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Already have an account?"),
-              Gaps.h5,
-              GestureDetector(
-                onTap: () => _onLoginTap(context),
-                child: Text(
-                  "Log in",
+    return OrientationBuilder(builder: (context, orientation) {
+      return Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Sizes.size40,
+            ),
+            child: Column(
+              children: [
+                Gaps.v80,
+                const Text(
+                  "Sign up for WoolTok",
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).primaryColor,
+                    fontSize: Sizes.size24,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
-              ),
-            ],
+                Gaps.v20,
+                const Text(
+                  "Create a profile, follow other accounts, make your own videos and more.",
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                    color: Colors.black45,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Gaps.v40,
+                //collection if, collection for는 하나의 대상에만 작동. 즉, 하나의 AuthButton에만 적용 된다.
+                //if 다음 덩어리는 list로 묶고 '...' 을 붙여주면, Collection if가 list를 return 함.
+                if (orientation == Orientation.portrait) ...[
+                  GestureDetector(
+                    onTap: () => _onEmailTap(context),
+                    child: const AuthButton(
+                        icon: FaIcon(FontAwesomeIcons.user),
+                        text: "Use email & password"),
+                  ),
+                  Gaps.v16,
+                  const AuthButton(
+                      icon: FaIcon(FontAwesomeIcons.apple),
+                      text: "Continue with Apple")
+                ],
+
+                //기존 Code에서 지금 Row는 고정된 크기를 제공하고 있지 않아서 문제 발생. auth_Button에서는 FractionallySizedBox라서 부모의 고정된 크기가 필요함.
+                // FractionallySizedBox가 Row 안에 있을 때는, FractionallySizedBox의 상위 위젯(이 경우 GestureDetector)을 expanded로 감싸준다.
+                if (orientation == Orientation.landscape)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => _onEmailTap(context),
+                          child: const AuthButton(
+                              icon: FaIcon(FontAwesomeIcons.user),
+                              text: "Use email & password"),
+                        ),
+                      ),
+                      Gaps.h16,
+                      const Expanded(
+                        child: AuthButton(
+                            icon: FaIcon(FontAwesomeIcons.apple),
+                            text: "Continue with Apple"),
+                      )
+                    ],
+                  )
+              ],
+            ),
           ),
         ),
-      ),
-    );
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.grey.shade50,
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: Sizes.size32,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Already have an account?"),
+                Gaps.h5,
+                GestureDetector(
+                  onTap: () => _onLoginTap(context),
+                  child: Text(
+                    "Log in",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 }
