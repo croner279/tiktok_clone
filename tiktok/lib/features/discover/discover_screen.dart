@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok/constants/breakpoints.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 
@@ -19,6 +20,7 @@ class DiscoverScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -54,8 +56,9 @@ class DiscoverScreen extends StatelessWidget {
             padding: const EdgeInsets.all(
               Sizes.size6,
             ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: width > Breakpoints.md ? 5 : 2,
+              //화면 크기가 일정 수준 넘어가면 칼럼을 5개로 늘려줌. Widget of the week의 MediaQuery 영상 보십쇼
               crossAxisSpacing: Sizes.size10,
               mainAxisSpacing: Sizes.size10,
               childAspectRatio: 9 / 20,
