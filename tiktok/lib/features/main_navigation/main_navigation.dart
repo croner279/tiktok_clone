@@ -17,8 +17,9 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 4;
-
+  int _selectedIndex = 1;
+//Web에서 실행할 때는 브라우저 정책상 소리가 있는 영상을 자동적으로 실행시키지 못하게 함.
+//영상 재생 남용을 막기 위함임.
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;

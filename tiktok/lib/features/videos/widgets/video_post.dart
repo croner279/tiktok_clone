@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
@@ -48,6 +49,10 @@ class _VideoPostState extends State<VideoPost>
         VideoPlayerController.asset("assets/videos/video.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true); // 영상 끝나면 반복시켜버림
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+    }
+    // 인스타그램도 보면 알겠지만 자동재생 되는 영상들은 기본적으로 음소거임. 크롬 정책상 그렇게 함.
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
@@ -58,21 +63,23 @@ class _VideoPostState extends State<VideoPost>
     _initVideoPlayer();
 
     _animationController = AnimationController(
-      vsync:
-          this, //vsync "prevents offscreen animation from consuming unnecessary resources"
-      //this는 이 클래스 자체. 위의 Mixin에는 ticker가 있는데 이 ticekr는 controller function을 애니메이션 프레임마다 실행함(vsync에 의해).
-      // resource를 많이 잡아먹긴 하지만 Single..Mixin은 화면이 enable 될때만 동영상 작동시키므로 괜찮음.
+      vsync: this,
       lowerBound: 1.0,
       upperBound: 1.5,
       value: 1.5,
       duration: _animationDuration,
     );
-    _animationController.addListener(() {
-      //addListener를 해줘야 계속 build메소드 호출. 이거 없으면 1.0에서 1.5로 중간부분 없이 바로 점프해버림
-      setState(
-          () {}); //AnimationController에서 숫자가 바뀔때 마다 setState 해줌. setState는 build메소드를 호출하고, 메소드는 가장 최신 값으로 rebuild 해줌
-    });
   }
+  /*    _animationController.addListener(() {
+      setState(
+          () {}); 
+    });
+  */
+  //addListener를 해줘야 계속 build메소드 호출. 이거 없으면 1.0에서 1.5로 중간부분 없이 바로 점프해버림
+  //AnimationController에서 숫자가 바뀔때 마다 setState 해줌. setState는 build메소드를 호출하고, 메소드는 가장 최신 값으로 rebuild 해줌
+  //vsync "prevents offscreen animation from consuming unnecessary resources"
+  //this는 이 클래스 자체. 위의 Mixin에는 ticker가 있는데 이 ticekr는 controller function을 애니메이션 프레임마다 실행함(vsync에 의해).
+  // resource를 많이 잡아먹긴 하지만 Single..Mixin은 화면이 enable 될때만 동영상 작동시키므로 괜찮음.
 
   @override
   void dispose() {
@@ -88,12 +95,12 @@ class _VideoPostState extends State<VideoPost>
 // mount 된 상태가 아니라면 visibility에 변화가 있더라도 아무 것도 반환하지 말아라.
     if (!mounted) return;
     if (info.visibleFraction == 1 &&
-        !_videoPlayerController.value.isPlaying &&
-        !_isPaused) {
-      // 영상이 100% visible(화면이 100% 틀어져 있을 때) + video가 재생이 안되고 있다면 video를 플레이.
-      // 새로고침하고 놔두면 다시 재생이 됨...
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
+    // 영상이 100% visible(화면이 100% 틀어져 있을 때) + video가 재생이 안되고 있다면 video를 플레이.
+    // 새로고침하고 놔두면 다시 재생이 됨...
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
       _onTogglePause(); // 동영상이 재생되고 있는 상태 + 화면에서 보이지 않게 되면 Pause를 한다.
     }
