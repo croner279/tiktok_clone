@@ -26,7 +26,11 @@ class DiscoverScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           elevation: 1,
-          title: const CupertinoSearchTextField(),
+          title: Container(
+              constraints: const BoxConstraints(
+                maxWidth: Breakpoints.sm,
+              ),
+              child: const CupertinoSearchTextField()),
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory,
             padding: const EdgeInsets.symmetric(horizontal: Sizes.size16),
@@ -63,66 +67,69 @@ class DiscoverScreen extends StatelessWidget {
               mainAxisSpacing: Sizes.size10,
               childAspectRatio: 9 / 20,
             ),
-            itemBuilder: (context, index) => Column(
-              children: [
-                Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                    Sizes.size10,
-                  )),
-                  child: AspectRatio(
-                    aspectRatio: 9 / 16,
-                    child: FadeInImage.assetNetwork(
-                        fit: BoxFit.cover,
-                        placeholder: "assets/images/placeholder.jpg",
-                        image:
-                            "https://plus.unsplash.com/premium_photo-1667428818562-fc8379f23bfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80"),
+            itemBuilder: (context, index) => LayoutBuilder(
+              builder: (context, constraints) => Column(
+                children: [
+                  Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                      Sizes.size10,
+                    )),
+                    child: AspectRatio(
+                      aspectRatio: 9 / 16,
+                      child: FadeInImage.assetNetwork(
+                          fit: BoxFit.cover,
+                          placeholder: "assets/images/placeholder.jpg",
+                          image:
+                              "https://plus.unsplash.com/premium_photo-1667428818562-fc8379f23bfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80"),
+                    ),
                   ),
-                ),
-                Gaps.v10,
-                const Text(
-                  "This is a very long caption for my wooltok that i am uploading just now currently loading",
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                    fontWeight: FontWeight.bold,
+                  Gaps.v10,
+                  Text(
+                    "${constraints.maxWidth} This is a very long caption for my wooltok that i am uploading just now currently loading",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: Sizes.size16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Gaps.v8,
-                DefaultTextStyle(
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  child: Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 13,
-                        backgroundImage: NetworkImage(
-                            "https://images.unsplash.com/photo-1570654621852-9dd25b76b38d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"),
-                      ),
-                      Gaps.h4,
-                      const Expanded(
-                        child: Text(
-                          "My Avartata is going to be very very long",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Gaps.h4,
-                      FaIcon(
-                        FontAwesomeIcons.heart,
-                        size: Sizes.size16,
+                  Gaps.v8,
+                  if (constraints.maxWidth < 200 || constraints.maxWidth > 250)
+                    DefaultTextStyle(
+                      style: TextStyle(
                         color: Colors.grey.shade600,
+                        fontWeight: FontWeight.w500,
                       ),
-                      Gaps.h2,
-                      const Text("2.5M")
-                    ],
-                  ),
-                )
-              ],
+                      child: Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 13,
+                            backgroundImage: NetworkImage(
+                                "https://images.unsplash.com/photo-1570654621852-9dd25b76b38d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"),
+                          ),
+                          Gaps.h4,
+                          const Expanded(
+                            child: Text(
+                              "My Avartata is going to be very very long",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Gaps.h4,
+                          FaIcon(
+                            FontAwesomeIcons.heart,
+                            size: Sizes.size16,
+                            color: Colors.grey.shade600,
+                          ),
+                          Gaps.h2,
+                          const Text("2.5M")
+                        ],
+                      ),
+                    )
+                ],
+              ),
             ),
           ),
           for (var tab in tabs.skip(1))
