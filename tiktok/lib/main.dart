@@ -26,31 +26,33 @@ class TikTokApp extends StatelessWidget {
       title: 'TikTok clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
-        textTheme: Typography.blackMountainView,
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: const Color(0xFFE9435A),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Color(0xFFE9435A),
-        ),
-        splashColor: Colors.transparent, //splashcolor를 사실상 꺼버림.
-        //highlightColor: Colors.transparent 이건 클릭 효과를 꺼버림
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontSize: Sizes.size16 + Sizes.size2,
-              fontWeight: FontWeight.w600),
-        ),
-        tabBarTheme: TabBarTheme(
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.grey.shade500,
-          indicatorColor: Colors.black,
-        ),
-      ),
+          textTheme: Typography.blackMountainView,
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: Colors.white,
+          primaryColor: const Color(0xFFE9435A),
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Color(0xFFE9435A),
+          ),
+          splashColor: Colors.transparent, //splashcolor를 사실상 꺼버림.
+          //highlightColor: Colors.transparent 이건 클릭 효과를 꺼버림
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            titleTextStyle: TextStyle(
+                color: Colors.black,
+                fontSize: Sizes.size16 + Sizes.size2,
+                fontWeight: FontWeight.w600),
+          ),
+          tabBarTheme: TabBarTheme(
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.grey.shade500,
+            indicatorColor: Colors.black,
+          ),
+          listTileTheme: const ListTileThemeData(
+            iconColor: Colors.black,
+          )),
       darkTheme: ThemeData(
           tabBarTheme: const TabBarTheme(
             indicatorColor: Colors.white,

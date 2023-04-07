@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/utils.dart';
 
 class VideoComments extends StatefulWidget {
   const VideoComments({super.key});
@@ -34,6 +35,7 @@ class _VideoCommentsState extends State<VideoComments> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkmode(context);
     final sizeOfComment = MediaQuery.of(context).size;
     return Container(
       height: sizeOfComment.height * 0.7,
@@ -46,9 +48,9 @@ class _VideoCommentsState extends State<VideoComments> {
         Sizes.size16,
       )),
       child: Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: isDark ? null : Colors.grey.shade50,
         appBar: AppBar(
-          backgroundColor: Colors.grey.shade50,
+          backgroundColor: isDark ? null : Colors.grey.shade50,
           automaticallyImplyLeading: false,
           title: const Text(
               '22796 comments'), //back button이 뜨는데 그건 새 화면으로 push(naviagate)했기 떄문. 보기 싫으니 없애자.
@@ -78,9 +80,10 @@ class _VideoCommentsState extends State<VideoComments> {
                   itemBuilder: (context, index) => Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
+                        backgroundColor: isDark ? Colors.grey.shade500 : null,
                         radius: 18,
-                        child: Text('용쨩'),
+                        child: const Text('용쨩'),
                       ),
                       Gaps.h16,
                       const Expanded(
@@ -126,7 +129,6 @@ class _VideoCommentsState extends State<VideoComments> {
                 bottom: 0,
                 width: sizeOfComment.width,
                 child: BottomAppBar(
-                  color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: Sizes.size16,
@@ -134,8 +136,8 @@ class _VideoCommentsState extends State<VideoComments> {
                     ),
                     child: Row(children: [
                       CircleAvatar(
-                        radius: 18,
                         backgroundColor: Colors.grey.shade500,
+                        radius: 18,
                         foregroundColor: Colors.white,
                         child: const Text('용쨩'),
                       ),
@@ -161,7 +163,9 @@ class _VideoCommentsState extends State<VideoComments> {
                                     .none //이거 안없애면 input box 클릭 시 못생긴 파란색 테두리가 생긴다.
                                 ),
                             filled: true,
-                            fillColor: Colors.grey.shade200,
+                            fillColor: isDark
+                                ? Colors.grey.shade600
+                                : Colors.grey.shade200,
                             contentPadding: const EdgeInsets.symmetric(
                               horizontal: Sizes.size12,
                               vertical: Sizes.size12,
@@ -174,17 +178,23 @@ class _VideoCommentsState extends State<VideoComments> {
                                 children: [
                                   FaIcon(
                                     FontAwesomeIcons.at,
-                                    color: Colors.grey.shade900,
+                                    color: isDark
+                                        ? Colors.grey.shade500
+                                        : Colors.grey.shade900,
                                   ),
                                   Gaps.h8,
                                   FaIcon(
                                     FontAwesomeIcons.gift,
-                                    color: Colors.grey.shade900,
+                                    color: isDark
+                                        ? Colors.grey.shade500
+                                        : Colors.grey.shade900,
                                   ),
                                   Gaps.h8,
                                   FaIcon(
                                     FontAwesomeIcons.faceSmile,
-                                    color: Colors.grey.shade900,
+                                    color: isDark
+                                        ? Colors.grey.shade500
+                                        : Colors.grey.shade900,
                                   ),
                                   Gaps.h8,
                                   if (_isWriting)
