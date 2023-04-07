@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tiktok/features/main_navigation/main_navigation.dart';
+import 'package:tiktok/features/authentication/sign_up_screen.dart';
 
 import 'constants/sizes.dart';
 
@@ -24,7 +24,11 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TikTok clone',
+      themeMode: ThemeMode.system,
       theme: ThemeData(
+        //brightness : Text 색깔을 light 모드일때 black으로 해줌.
+        //왠만하면 앱 만들기 전에 ThemeData 다 정해놓고 짜라
+        brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
         splashColor: Colors.transparent, //splashcolor를 사실상 꺼버림.
@@ -39,35 +43,20 @@ class TikTokApp extends StatelessWidget {
                 fontSize: Sizes.size16 + Sizes.size2,
                 fontWeight: FontWeight.w600)),
       ),
-      home: const MainNavigationScreen(),
+      darkTheme: ThemeData(
+          //brightness : Text 색깔을 dark 모드일때 white로 해줌.
+          brightness: Brightness.dark,
+          scaffoldBackgroundColor: Colors.black,
+          primaryColor: const Color(0xFFE9435A),
+          bottomAppBarTheme: BottomAppBarTheme(
+            color: Colors.grey.shade800,
+          )),
+      home: const SignUpScreen(),
     );
   }
 }
-/* 
-class LayoutBuilderCodeLab extends StatelessWidget {
-  const LayoutBuilderCodeLab({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Scaffold(
-        //Layoutbuilder가 Scaffold body 바로 아래 있을 때는 화면 제약이 없음. 화면최대크기가 constraints.max가 됨
-        //LayoutBuilder는 결국 부모 위젯의 최대크기를 알고 싶을 때 사용하는 것임.
-        body: SizedBox(
-      width: size.width / 2,
-      child: LayoutBuilder(
-          builder: (context, constraints) => Container(
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-                color: Colors.amber,
-                child: Center(
-                  child: Text(
-                    "${size.width}/${constraints.maxWidth}",
-                    style: const TextStyle(color: Colors.white, fontSize: 56),
-                  ),
-                ),
-              )),
-    ));
-  }
-}
- */
+
+//Dark Mode 방법1. Theme의 모든 디폴트 컬러, background 등 전부 설정해줌.
+//          방법2. 기존 코드 중에 이미 하드 코딩 된 색깔 (회색 같은)이 있다면, MediaQuery 사용
+ 
