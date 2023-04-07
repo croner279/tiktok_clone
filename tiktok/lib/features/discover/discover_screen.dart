@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/breakpoints.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
+import 'package:tiktok/utils.dart';
 
 final tabs = [
   "Top",
@@ -27,10 +28,15 @@ class DiscoverScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 1,
           title: Container(
-              constraints: const BoxConstraints(
-                maxWidth: Breakpoints.sm,
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.sm,
+            ),
+            child: CupertinoSearchTextField(
+              style: TextStyle(
+                color: isDarkmode(context) ? Colors.white : Colors.black,
               ),
-              child: const CupertinoSearchTextField()),
+            ),
+          ),
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory,
             padding: const EdgeInsets.symmetric(horizontal: Sizes.size16),
@@ -39,9 +45,8 @@ class DiscoverScreen extends StatelessWidget {
               fontWeight: FontWeight.w600,
               fontSize: Sizes.size14,
             ),
-            indicatorColor: Colors.black,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey.shade500,
+            // 이건, 만약 main.dart에서 theme을 적용했는데도 불구하고 버그로 자동적용이 안되어있으면 강제적용시키는 코드.
+            indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
             tabs: [
               for (var tab
                   in tabs) //PreferredSizedWidget을 넣을 수 있고, TabBar가 그것임.
@@ -86,11 +91,11 @@ class DiscoverScreen extends StatelessWidget {
                     ),
                   ),
                   Gaps.v10,
-                  Text(
-                    "${constraints.maxWidth} This is a very long caption for my wooltok that i am uploading just now currently loading",
+                  const Text(
+                    "This is a very long caption for my wooltok that i am uploading just now currently loading",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: Sizes.size16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -99,8 +104,10 @@ class DiscoverScreen extends StatelessWidget {
                   if (constraints.maxWidth < 200 || constraints.maxWidth > 250)
                     DefaultTextStyle(
                       style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontWeight: FontWeight.w500,
+                        color: isDarkmode(context)
+                            ? Colors.grey.shade300
+                            : Colors.grey.shade600,
+                        fontWeight: FontWeight.w600,
                       ),
                       child: Row(
                         children: [
