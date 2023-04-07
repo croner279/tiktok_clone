@@ -30,36 +30,7 @@ class TikTokApp extends StatelessWidget {
         //brightness : Text 색깔을 light 모드일때 black으로 해줌.
         //왠만하면 앱 만들기 전에 ThemeData 다 정해놓고 짜라
         brightness: Brightness.light,
-        textTheme: TextTheme(
-          //material 공홈의 typography 부분
-          displayLarge: GoogleFonts.openSans(
-              fontSize: 93, fontWeight: FontWeight.w300, letterSpacing: -1.5),
-          displayMedium: GoogleFonts.openSans(
-              fontSize: 58, fontWeight: FontWeight.w300, letterSpacing: -0.5),
-          displaySmall:
-              GoogleFonts.openSans(fontSize: 47, fontWeight: FontWeight.w400),
-          headlineMedium: GoogleFonts.openSans(
-              fontSize: 33, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-          headlineSmall:
-              GoogleFonts.openSans(fontSize: 23, fontWeight: FontWeight.w400),
-          titleLarge: GoogleFonts.openSans(
-              fontSize: 19, fontWeight: FontWeight.w500, letterSpacing: 0.15),
-          titleMedium: GoogleFonts.openSans(
-              fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15),
-          titleSmall: GoogleFonts.openSans(
-              fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
-          bodyLarge: GoogleFonts.roboto(
-              fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
-          bodyMedium: GoogleFonts.roboto(
-              fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-          labelLarge: GoogleFonts.roboto(
-              fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
-          bodySmall: GoogleFonts.roboto(
-              fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
-          labelSmall: GoogleFonts.roboto(
-              fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
-        ),
-
+        textTheme: GoogleFonts.itimTextTheme(),
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
         splashColor: Colors.transparent, //splashcolor를 사실상 꺼버림.
@@ -75,14 +46,12 @@ class TikTokApp extends StatelessWidget {
                 fontWeight: FontWeight.w600)),
       ),
       darkTheme: ThemeData(
-          //brightness : Text 색깔을 dark 모드일때 white로 해줌.
-          textTheme: const TextTheme(
-              //이런 식으로 textTheme을 미리 정해두면 다른 화면에서도 일괄적으로 통일 가능
-              headlineLarge: TextStyle(
-            fontSize: Sizes.size24,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          )),
+          // brightness : Text 색깔을 dark 모드일때 white로 해줌.
+          // textTheme으로 정해도 개별 화면의 Text에는 별도의 textStyle을 또 정해줄 수도 있음.
+
+          textTheme: GoogleFonts.itimTextTheme(
+            ThemeData(brightness: Brightness.dark).textTheme,
+          ),
           brightness: Brightness.dark,
           scaffoldBackgroundColor: Colors.black,
           primaryColor: const Color(0xFFE9435A),
