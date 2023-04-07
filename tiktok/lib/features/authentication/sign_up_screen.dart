@@ -40,10 +40,11 @@ class SignUpScreen extends StatelessWidget {
             child: Column(
               children: [
                 Gaps.v80,
-                Text(
-                  "Sign up for WoolTok",
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
+                const Text("Sign up for WoolTok",
+                    style: TextStyle(
+                      fontSize: Sizes.size24,
+                      fontWeight: FontWeight.w700,
+                    )),
                 Gaps.v20,
                 const Opacity(
                   opacity: 0.7,

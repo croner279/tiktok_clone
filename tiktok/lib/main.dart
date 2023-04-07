@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tiktok/features/authentication/sign_up_screen.dart';
+import 'package:tiktok/features/onboarding/interests_screen.dart';
 
 import 'constants/sizes.dart';
 
@@ -27,10 +26,8 @@ class TikTokApp extends StatelessWidget {
       title: 'TikTok clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
-        //brightness : Text 색깔을 light 모드일때 black으로 해줌.
-        //왠만하면 앱 만들기 전에 ThemeData 다 정해놓고 짜라
+        textTheme: Typography.blackMountainView,
         brightness: Brightness.light,
-        textTheme: GoogleFonts.itimTextTheme(),
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
         splashColor: Colors.transparent, //splashcolor를 사실상 꺼버림.
@@ -46,19 +43,17 @@ class TikTokApp extends StatelessWidget {
                 fontWeight: FontWeight.w600)),
       ),
       darkTheme: ThemeData(
-          // brightness : Text 색깔을 dark 모드일때 white로 해줌.
-          // textTheme으로 정해도 개별 화면의 Text에는 별도의 textStyle을 또 정해줄 수도 있음.
-
-          textTheme: GoogleFonts.itimTextTheme(
-            ThemeData(brightness: Brightness.dark).textTheme,
-          ),
+          textTheme: Typography.whiteMountainView,
           brightness: Brightness.dark,
           scaffoldBackgroundColor: Colors.black,
           primaryColor: const Color(0xFFE9435A),
           bottomAppBarTheme: BottomAppBarTheme(
             color: Colors.grey.shade800,
+          ),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.grey.shade900,
           )),
-      home: const SignUpScreen(),
+      home: const InterestsScreen(),
     );
   }
 }

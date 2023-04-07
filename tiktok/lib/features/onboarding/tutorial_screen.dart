@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/main_navigation/main_navigation.dart';
+import 'package:tiktok/utils.dart';
 
 enum Direction { right, left }
 
@@ -92,7 +93,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 children: [
                   Gaps.v80,
                   Text(
-                    'Obey Rule',
+                    'Starting WoolTok',
                     style: TextStyle(
                       fontSize: Sizes.size36,
                       fontWeight: FontWeight.bold,
@@ -100,7 +101,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                   ),
                   Gaps.v16,
                   Text(
-                    'You have to Obey',
+                    "Let's go!",
                     style: TextStyle(
                       fontSize: Sizes.size20,
                       fontWeight: FontWeight.w300,
@@ -112,22 +113,23 @@ class _TutorialScreenState extends State<TutorialScreen> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
+            color: isDarkmode(context) ? Colors.black : Colors.white,
             child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: Sizes.size24,
-            horizontal: Sizes.size24,
-          ),
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 300),
-            opacity: _showingPage == Page.first ? 0 : 1,
-            child: CupertinoButton(
-              onPressed:
-                  _onEnterAppTap, // onTap과 onPressed는 비슷하긴 한데, CupertinoButton 같은 표준 버튼 위젯에서는 자체적으로 onPressed 사용하는 게 바람직함.
-              color: Theme.of(context).primaryColor,
-              child: const Text('Enter the app!'),
-            ),
-          ),
-        )),
+              padding: const EdgeInsets.symmetric(
+                vertical: Sizes.size24,
+                horizontal: Sizes.size24,
+              ),
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 300),
+                opacity: _showingPage == Page.first ? 0 : 1,
+                child: CupertinoButton(
+                  onPressed:
+                      _onEnterAppTap, // onTap과 onPressed는 비슷하긴 한데, CupertinoButton 같은 표준 버튼 위젯에서는 자체적으로 onPressed 사용하는 게 바람직함.
+                  color: Theme.of(context).primaryColor,
+                  child: const Text('Enter the app!'),
+                ),
+              ),
+            )),
       ),
     );
   }

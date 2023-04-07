@@ -4,6 +4,7 @@ import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/authentication/login_form_screen.dart';
 import 'package:tiktok/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok/utils.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -32,21 +33,28 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               Gaps.v80,
-              Text("Log in to WoolTok",
-                  style: Theme.of(context)
+              const Text("Log in to WoolTok",
+                  style: TextStyle(
+                    fontSize: Sizes.size24,
+                    fontWeight: FontWeight.w700,
+                  )
+
+                  /*  Theme.of(context)
                       .textTheme
                       .headlineSmall!
                       .copyWith(color: Colors.blue)
-                  //기존 textTheme에 커스텀 요소를 추가하고 싶을 때 copywith 사용하고 '!'로 headlineSmall이 정의되어 있다는 걸 dart에 알려줌.
+                   */ //기존 textTheme에 커스텀 요소를 추가하고 싶을 때 copywith 사용하고 '!'로 headlineSmall이 정의되어 있다는 걸 dart에 알려줌.
                   ),
               Gaps.v20,
-              const Text(
-                "Manage your account, check notification, comment on videos, and more.",
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black45,
+              const Opacity(
+                opacity: 0.7,
+                child: Text(
+                  "Manage your account, check notification, comment on videos, and more.",
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               Gaps.v40,
               GestureDetector(
@@ -64,7 +72,7 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.grey.shade50,
+        color: isDarkmode(context) ? null : Colors.grey,
         elevation: 5,
         child: Padding(
           padding: const EdgeInsets.symmetric(
