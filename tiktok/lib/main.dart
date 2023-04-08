@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tiktok/features/main_navigation/main_navigation.dart';
+import 'package:tiktok/features/onboarding/interests_screen.dart';
 
 import 'constants/sizes.dart';
 
@@ -26,6 +26,7 @@ class TikTokApp extends StatelessWidget {
       title: 'TikTok clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
+          useMaterial3: true,
           textTheme: Typography.blackMountainView,
           brightness: Brightness.light,
           scaffoldBackgroundColor: Colors.white,
@@ -39,6 +40,7 @@ class TikTokApp extends StatelessWidget {
             centerTitle: true,
             foregroundColor: Colors.black,
             backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
             elevation: 0,
             titleTextStyle: TextStyle(
                 color: Colors.black,
@@ -54,23 +56,40 @@ class TikTokApp extends StatelessWidget {
             iconColor: Colors.black,
           )),
       darkTheme: ThemeData(
-          tabBarTheme: const TabBarTheme(
-            indicatorColor: Colors.white,
-          ),
-          textTheme: Typography.whiteMountainView,
-          brightness: Brightness.dark,
-          scaffoldBackgroundColor: Colors.black,
-          primaryColor: const Color(0xFFE9435A),
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: Color(0xFFE9435A),
-          ),
-          bottomAppBarTheme: BottomAppBarTheme(
-            color: Colors.grey.shade800,
-          ),
-          appBarTheme: AppBarTheme(
+        //useMaterial3 하는 순간 bottomAppBar 이런 위젯은 없어지기 때문에 Container 등으로 바꿔야 함
+        useMaterial3: true,
+        tabBarTheme: TabBarTheme(
+          indicatorColor: Colors.white,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.grey.shade700,
+        ),
+        textTheme: Typography.whiteMountainView,
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.black,
+        primaryColor: const Color(0xFFE9435A),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
+        ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade800,
+        ),
+        appBarTheme: AppBarTheme(
+            centerTitle: true,
+            surfaceTintColor: Colors.grey.shade900,
             backgroundColor: Colors.grey.shade900,
-          )),
-      home: const MainNavigationScreen(),
+            elevation: 0,
+            titleTextStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: Sizes.size16 + Sizes.size2,
+                fontWeight: FontWeight.w600),
+            actionsIconTheme: IconThemeData(
+              color: Colors.amber.shade400,
+            ),
+            iconTheme: IconThemeData(
+              color: Colors.grey.shade100,
+            )),
+      ),
+      home: const InterestsScreen(),
     );
   }
 }

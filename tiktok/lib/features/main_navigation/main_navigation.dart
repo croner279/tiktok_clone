@@ -68,12 +68,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           child: const UserProfileScreen(),
         ),
       ]), //screens[_selectedIndex]랑 동일함
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: Container(
         color: _selectedIndex == 0 || isDarkmode(context)
             ? Colors.black
             : Colors.white,
         child: Padding(
-            padding: const EdgeInsets.all(Sizes.size16),
+            padding: const EdgeInsets.only(
+              top: Sizes.size12,
+              bottom: Sizes.size12,
+              left: Sizes.size24,
+              right: Sizes.size24,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

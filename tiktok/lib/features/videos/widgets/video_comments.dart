@@ -128,11 +128,14 @@ class _VideoCommentsState extends State<VideoComments> {
                 //왜 bottomNavigation 안쓰냐면.. 기본적으로 키보드를 열면 bottomAppbar가 숨겨지거든. 근데 우리는 키보드랑 같이 딸려올라가길 바람. 그래서 Stack으로 Listview를 다시 감싼 다음, Positioned 내에 넣음.
                 bottom: 0,
                 width: sizeOfComment.width,
-                child: BottomAppBar(
+                child: Container(
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Sizes.size16,
-                      vertical: Sizes.size10,
+                    padding: const EdgeInsets.only(
+                      left: Sizes.size16,
+                      right: Sizes.size16,
+                      top: Sizes.size10,
+                      bottom: Sizes.size24,
                     ),
                     child: Row(children: [
                       CircleAvatar(
