@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/authentication/login_form_screen.dart';
@@ -11,7 +12,7 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
-    Navigator.of(context).pop();
+    context.pop();
     // Naivgator의 가장 상단 화면, 유저가 현재 보고 있는 현재 화면을 스택에서 제거해줌.
     // 스택에는 push 와 pop이 있는데, push는 기존 팬케잌 위에 새 팬케잌을 두는 것. (팬케잌=화면)
     // pop 은 제일 위에 있는 팬케잌을 빼는 것

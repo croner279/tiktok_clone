@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/authentication/login_screen.dart';
@@ -12,12 +13,15 @@ class SignUpScreen extends StatelessWidget {
   static String routeName = "/";
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context).pushNamed(LoginScreen.routeName);
+  void _onLoginTap(BuildContext context) async {
+    //go_router extension.dart 패키지에서 context 객체를 확장, push 메소드를 갖게 해줌.
+    context.push(LoginScreen.routeName);
+    //.push 로 page stack을 쌓고, .pop은 스택 중 젤 윗화면을 치워서 이전화면으로 가게 되는데, .go는 stack과는 별도의 공간으로 보내버림.
+    //그래서 .push와 다르게 .go로 이동하면 back 버튼을 제공 안해줌. 웹이라면 뒤로가기 버튼이 있는데, 앱은 그게 없음.
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    context.push(UsernameScreen.routeName);
   }
 
   //Dart는 다른 언어의 public, private, protected 같은 접근 지정자가 없어서 메서드를 private으로 선언하려면

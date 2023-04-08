@@ -6,7 +6,6 @@ import '../../constants/sizes.dart';
 
 class EmailScreenArgs {
   final String username;
-
   EmailScreenArgs({required this.username});
 }
 
