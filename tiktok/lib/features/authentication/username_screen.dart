@@ -5,6 +5,7 @@ import 'package:tiktok/features/authentication/widgets/form_button.dart';
 import '../../constants/sizes.dart';
 
 class UsernameScreen extends StatefulWidget {
+  static String routeName = "/username";
   const UsernameScreen({super.key});
 
   @override
@@ -35,9 +36,9 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
   void _onNextTap() {
     if (_username.isEmpty) return; //username이 공란이면 암것도 return 하지 말아라
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const EmailScreen(),
-    ));
+    Navigator.pushNamed(context, EmailScreen.routeName,
+        //username을 username_screen에서 email_screen으로 보낸다
+        arguments: EmailScreenArgs(username: _username));
   }
 
   @override

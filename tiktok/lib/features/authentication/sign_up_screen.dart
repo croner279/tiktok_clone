@@ -8,19 +8,22 @@ import 'package:tiktok/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
+  //static 변수라 widget을 build해줄 필요가 없다.
+  static String routeName = "/";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      //이렇게 push를 하면 화면을 기존 화면 위에 쌓는 것임.
-      // Sign up 누르면 Sign up 화면 뜨고 거기서 Log in 누르면 그 위에 Log in 화면 덮어지고 팬케이크 쌓듯이 무한반복
-      // 그래서 어느 지점에서는 멈춰야됨. loginscreen 에서는 push가 아니라 뒤로가기를 하는 것.
-      builder: (context) => const LoginScreen(),
-    ));
+    Navigator.of(context).pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+  }
+
+  //Dart는 다른 언어의 public, private, protected 같은 접근 지정자가 없어서 메서드를 private으로 선언하려면
+  // 그냥 메서드나 프로퍼티 앞에 _를 붙여줘라.
+
+/*     Navigator.of(context).push(
       PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 300),
           reverseTransitionDuration: const Duration(milliseconds: 100),
@@ -44,9 +47,7 @@ class SignUpScreen extends StatelessWidget {
               ),
             );
           }),
-    );
-  } //Dart는 다른 언어의 public, private, protected 같은 접근 지정자가 없어서 메서드를 private으로 선언하려면
-  // 그냥 메서드나 프로퍼티 앞에 _를 붙여줘라.
+    ); */
 
   @override
   Widget build(BuildContext context) {

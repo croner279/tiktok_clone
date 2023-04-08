@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tiktok/features/authentication/email_screen.dart';
+import 'package:tiktok/features/authentication/login_screen.dart';
 import 'package:tiktok/features/authentication/sign_up_screen.dart';
+import 'package:tiktok/features/authentication/username_screen.dart';
 
 import 'constants/sizes.dart';
 
@@ -89,7 +92,14 @@ class TikTokApp extends StatelessWidget {
               color: Colors.grey.shade100,
             )),
       ),
-      home: const SignUpScreen(),
+      //이제 아래가 home임. home 프로퍼티를 지정안하면 에러가 나서 이니셜라우트 해줘야 함.
+      initialRoute: SignUpScreen.routeName,
+      routes: {
+        SignUpScreen.routeName: (context) => const SignUpScreen(),
+        UsernameScreen.routeName: (context) => const UsernameScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
+        EmailScreen.routeName: (context) => const EmailScreen()
+      },
     );
   }
 }

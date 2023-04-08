@@ -7,6 +7,7 @@ import 'package:tiktok/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok/utils.dart';
 
 class LoginScreen extends StatelessWidget {
+  static String routeName = "/login";
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
@@ -72,7 +73,7 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        color: isDarkmode(context) ? null : Colors.grey,
+        color: isDarkmode(context) ? null : Colors.grey.shade50,
         child: Padding(
           padding: const EdgeInsets.only(
             top: Sizes.size32,
