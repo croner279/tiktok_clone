@@ -67,6 +67,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           offstage: _selectedIndex != 4,
           child: const UserProfileScreen(
             username: "울쨩이",
+            tab: "",
           ),
         ),
       ]), //screens[_selectedIndex]랑 동일함

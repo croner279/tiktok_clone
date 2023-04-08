@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/features/authentication/email_screen.dart';
 import 'package:tiktok/features/authentication/widgets/form_button.dart';
@@ -35,10 +36,12 @@ class _UsernameScreenState extends State<UsernameScreen> {
   }
 
   void _onNextTap() {
-    if (_username.isEmpty) return; //username이 공란이면 암것도 return 하지 말아라
-    Navigator.pushNamed(context, EmailScreen.routeName,
-        //username을 username_screen에서 email_screen으로 보낸다
-        arguments: EmailScreenArgs(username: _username));
+    if (_username.isEmpty) return;
+    context.push(
+      EmailScreen.routeName,
+      extra: EmailScreenArgs(username: _username),
+    );
+    //username을 username_screen에서 email_screen으로 보낸다
   }
 
   @override
