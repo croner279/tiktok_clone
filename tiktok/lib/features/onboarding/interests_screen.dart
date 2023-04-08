@@ -141,9 +141,11 @@ class _InterestsScreenState extends State<InterestsScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: Sizes.size24,
-          horizontal: Sizes.size24,
+        padding: const EdgeInsets.only(
+          bottom: Sizes.size40,
+          top: Sizes.size16,
+          left: Sizes.size24,
+          right: Sizes.size24,
         ),
         child: GestureDetector(
           onTap: _onNextTap,

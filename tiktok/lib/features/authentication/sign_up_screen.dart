@@ -21,9 +21,29 @@ class SignUpScreen extends StatelessWidget {
 
   void _onEmailTap(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const UsernameScreen(),
-      ),
+      PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 300),
+          reverseTransitionDuration: const Duration(milliseconds: 100),
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const UsernameScreen(),
+          //transitionBuilder의 child는 pageBuilder가 호출하는 그 무엇
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            final offsetAnimation = Tween(
+              begin: const Offset(0, -1),
+              end: Offset.zero,
+            ).animate(animation);
+            final opacityAnimation = Tween(
+              begin: 0.5,
+              end: 0.8,
+            ).animate(animation);
+            return SlideTransition(
+              position: offsetAnimation,
+              child: FadeTransition(
+                opacity: animation,
+                child: child,
+              ),
+            );
+          }),
     );
   } //Dart는 다른 언어의 public, private, protected 같은 접근 지정자가 없어서 메서드를 private으로 선언하려면
   // 그냥 메서드나 프로퍼티 앞에 _를 붙여줘라.
