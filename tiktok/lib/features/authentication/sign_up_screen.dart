@@ -10,7 +10,9 @@ import 'package:tiktok/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
   //static 변수라 widget을 build해줄 필요가 없다.
-  static String routeName = "/";
+
+  static const routeURL = "/";
+  static const routeName = "signUp";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
@@ -21,7 +23,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
-    context.push(UsernameScreen.routeName);
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   //Dart는 다른 언어의 public, private, protected 같은 접근 지정자가 없어서 메서드를 private으로 선언하려면
