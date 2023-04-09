@@ -17,13 +17,17 @@ class SignUpScreen extends StatelessWidget {
 
   void _onLoginTap(BuildContext context) async {
     //go_router extension.dart 패키지에서 context 객체를 확장, push 메소드를 갖게 해줌.
-    context.push(LoginScreen.routeName);
+    context.pushNamed(LoginScreen.routeName);
     //.push 로 page stack을 쌓고, .pop은 스택 중 젤 윗화면을 치워서 이전화면으로 가게 되는데, .go는 stack과는 별도의 공간으로 보내버림.
     //그래서 .push와 다르게 .go로 이동하면 back 버튼을 제공 안해줌. 웹이라면 뒤로가기 버튼이 있는데, 앱은 그게 없음.
   }
 
   void _onEmailTap(BuildContext context) {
-    context.pushNamed(UsernameScreen.routeName);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const UsernameScreen(),
+        ));
   }
 
   //Dart는 다른 언어의 public, private, protected 같은 접근 지정자가 없어서 메서드를 private으로 선언하려면
