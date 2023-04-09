@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/inbox/chat_detail_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
+  static const String routeName = "chats";
+  static const String routeURL = "/chats";
   const ChatsScreen({super.key});
 
   @override
@@ -72,15 +75,16 @@ removeAt 메소드는 그 자체로 항목을 삭제하지만, deleteItem 함수
 따라서, removeItem 메소드를 사용하여 AnimatedList 위젯에서 해당 항목을 제거하고, items 배열에서 removeAt 메소드를 사용하여 해당 항목을 제거합니다.
  */
 
-  void _onChatTap() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const ChatDetailScreen(),
-    ));
+  void _onChatTap(int index) {
+    context.pushNamed(
+      ChatDetailScreen.routeName,
+      params: {"chatId": "$index"},
+    );
   }
 
   Widget _makeTile(int index) {
     return ListTile(
-      onTap: _onChatTap,
+      onTap: () => _onChatTap(index),
       onLongPress: () => _deleteItem(index),
 /* 코드에서 onLongPress 속성은 길게 누르면 실행되는 콜백 함수를 지정하는 역할을 합니다. 예를 들어, 버튼을 길게 누르면 버튼을 클릭한 것과는 다른 동작을 수행할 수 있습니다.
 그런데 코드에서는 onLongPress 속성에 _deleteItem(index)를 직접 전달하고 있습니다. 이렇게 하면 아이템이 추가될 때 _deleteItem 함수가 즉시 실행됩니다. 즉, onLongPress가 아닌, AnimatedList 위젯이 초기화될 때마다 _deleteItem 함수가 실행됩니다.

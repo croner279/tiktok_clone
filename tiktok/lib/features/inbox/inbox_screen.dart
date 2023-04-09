@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok/constants/sizes.dart';
 import 'package:tiktok/features/inbox/activity_screen.dart';
 import 'package:tiktok/features/inbox/chats_screen.dart';
@@ -14,15 +15,12 @@ class InboxScreen extends StatefulWidget {
 class _InboxScreenState extends State<InboxScreen> {
 //Stateless Widgete에서는 메소드가 자체적인 context를 가질 수 없다. Build 메소드만이 context를 가질 수 있다.
   void _onDmPressed() {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const ChatsScreen(),
-    ));
+    context.pushNamed(ChatsScreen.routeName);
   }
 
   void _onActivityTap(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const ActivityScreen(),
-    )); // ctrl + spacebar 누르면 메소드 단축키 뜬다.
+    context
+        .pushNamed(ActivityScreen.routeName); // ctrl + spacebar 누르면 메소드 단축키 뜬다.
   }
 
   @override

@@ -4,8 +4,16 @@ import 'package:tiktok/constants/gaps.dart';
 import 'package:tiktok/constants/sizes.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
+  static const String routeName = "chatDetail";
+  static const String routeURL = ":chatId";
+  //자식 경로(Goroute 내에서 세부 router로 가는 것)는 "/"로 시작할 수 없어서 세미콜론으로 시작하게 함.
 
+  final String chatID;
+
+  const ChatDetailScreen({
+    super.key,
+    required this.chatID,
+  });
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();
 }
@@ -15,20 +23,20 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const ListTile(
+        title: ListTile(
           contentPadding: EdgeInsets.zero,
           horizontalTitleGap: 10,
-          leading: CircleAvatar(
+          leading: const CircleAvatar(
             radius: Sizes.size20,
             //foregroundColor: ,
             child: Text('울쨩'),
           ),
           title: Text(
-            '울쨩',
-            style: TextStyle(fontWeight: FontWeight.w600),
+            '울쨩 (${widget.chatID})',
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
-          subtitle: Text('Active Now'),
-          trailing: Row(
+          subtitle: const Text('Active Now'),
+          trailing: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               FaIcon(
