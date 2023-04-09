@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:tiktok/common/widgets/main_navigation/main_navigation.dart';
 import 'package:tiktok/features/authentication/login_screen.dart';
 import 'package:tiktok/features/authentication/sign_up_screen.dart';
 import 'package:tiktok/features/onboarding/interests_screen.dart';
@@ -18,5 +19,14 @@ final router = GoRouter(routes: [
     name: InterestsScreen.routeName,
     path: InterestsScreen.routeURL,
     builder: (context, state) => const InterestsScreen(),
+  ),
+  GoRoute(
+    path:
+        "/:tab(home|discover|inbox|profile)", //이렇게 하면 tab은 이 네가지만 해당됨. 이거 안해두면 /howareyou 이런 url도 여기로 들어옴. tab은
+    name: MainNavigationScreen.routeName,
+    builder: (context, state) {
+      final tab = state.params['tab']!;
+      return MainNavigationScreen(tab: tab);
+    },
   )
 ]);
