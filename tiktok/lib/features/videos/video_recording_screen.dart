@@ -210,6 +210,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                 alignment: Alignment.center,
                 children: [
                   CameraPreview(_cameraController),
+                  const Positioned(
+                    top: Sizes.size32,
+                    left: Sizes.size32,
+                    child: CloseButton(
+                      color: Colors.white,
+                    ),
+                  ),
                   Positioned(
                     top: Sizes.size32,
                     right: Sizes.size32,

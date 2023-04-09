@@ -84,10 +84,11 @@ class DiscoverScreen extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 9 / 16,
                       child: FadeInImage.assetNetwork(
-                          fit: BoxFit.cover,
-                          placeholder: "assets/images/placeholder.jpg",
-                          image:
-                              "https://plus.unsplash.com/premium_photo-1667428818562-fc8379f23bfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80"),
+                        fit: BoxFit.cover,
+                        placeholder: "assets/images/placeholder.jpg",
+                        image:
+                            "https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
+                      ),
                     ),
                   ),
                   Gaps.v10,
@@ -115,7 +116,8 @@ class DiscoverScreen extends StatelessWidget {
                           const CircleAvatar(
                             radius: 13,
                             backgroundImage: NetworkImage(
-                                "https://images.unsplash.com/photo-1570654621852-9dd25b76b38d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"),
+                              "https://avatars.githubusercontent.com/u/3612017",
+                            ),
                           ),
                           Gaps.h4,
                           const Expanded(
