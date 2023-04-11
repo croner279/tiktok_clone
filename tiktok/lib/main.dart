@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tiktok/common/widgets/main_navigation/widgets/darkMode_config.dart';
 import 'package:tiktok/router.dart';
-
 import 'constants/sizes.dart';
 
 void main() async {
@@ -21,76 +21,80 @@ class TikTokApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
-      debugShowCheckedModeBanner: false,
-      title: 'TikTok clone',
-      themeMode: ThemeMode.system,
-      theme: ThemeData(
+    return AnimatedBuilder(
+      animation: darkModeConfig,
+      builder: (context, child) => MaterialApp.router(
+        routerConfig: router,
+        debugShowCheckedModeBanner: false,
+        title: 'TikTok clone',
+        // themeMode: ThemeMode.system 이건 시스템 설정에 따른다는 코드.
+        themeMode: darkModeConfig.value ? ThemeMode.dark : ThemeMode.light,
+        theme: ThemeData(
+            useMaterial3: true,
+            textTheme: Typography.blackMountainView,
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: Colors.white,
+            primaryColor: const Color(0xFFE9435A),
+            textSelectionTheme: const TextSelectionThemeData(
+              cursorColor: Color(0xFFE9435A),
+            ),
+            splashColor: Colors.transparent, //splashcolor를 사실상 꺼버림.
+            //highlightColor: Colors.transparent 이건 클릭 효과를 꺼버림
+            appBarTheme: const AppBarTheme(
+              centerTitle: true,
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
+              elevation: 0,
+              titleTextStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: Sizes.size16 + Sizes.size2,
+                  fontWeight: FontWeight.w600),
+            ),
+            tabBarTheme: TabBarTheme(
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey.shade500,
+              indicatorColor: Colors.black,
+            ),
+            listTileTheme: const ListTileThemeData(
+              iconColor: Colors.black,
+            )),
+        darkTheme: ThemeData(
+          //useMaterial3 하는 순간 bottomAppBar 이런 위젯은 없어지기 때문에 Container 등으로 바꿔야 함
           useMaterial3: true,
-          textTheme: Typography.blackMountainView,
-          brightness: Brightness.light,
-          scaffoldBackgroundColor: Colors.white,
+          tabBarTheme: TabBarTheme(
+            indicatorColor: Colors.white,
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.grey.shade700,
+          ),
+          textTheme: Typography.whiteMountainView,
+          brightness: Brightness.dark,
+          scaffoldBackgroundColor: Colors.black,
           primaryColor: const Color(0xFFE9435A),
           textSelectionTheme: const TextSelectionThemeData(
             cursorColor: Color(0xFFE9435A),
           ),
-          splashColor: Colors.transparent, //splashcolor를 사실상 꺼버림.
-          //highlightColor: Colors.transparent 이건 클릭 효과를 꺼버림
-          appBarTheme: const AppBarTheme(
-            centerTitle: true,
-            foregroundColor: Colors.black,
-            backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white,
-            elevation: 0,
-            titleTextStyle: TextStyle(
-                color: Colors.black,
-                fontSize: Sizes.size16 + Sizes.size2,
-                fontWeight: FontWeight.w600),
+          bottomAppBarTheme: BottomAppBarTheme(
+            color: Colors.grey.shade800,
           ),
-          tabBarTheme: TabBarTheme(
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey.shade500,
-            indicatorColor: Colors.black,
-          ),
-          listTileTheme: const ListTileThemeData(
-            iconColor: Colors.black,
-          )),
-      darkTheme: ThemeData(
-        //useMaterial3 하는 순간 bottomAppBar 이런 위젯은 없어지기 때문에 Container 등으로 바꿔야 함
-        useMaterial3: true,
-        tabBarTheme: TabBarTheme(
-          indicatorColor: Colors.white,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.grey.shade700,
+          appBarTheme: AppBarTheme(
+              centerTitle: true,
+              surfaceTintColor: Colors.grey.shade900,
+              backgroundColor: Colors.grey.shade900,
+              elevation: 0,
+              titleTextStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: Sizes.size16 + Sizes.size2,
+                  fontWeight: FontWeight.w600),
+              actionsIconTheme: IconThemeData(
+                color: Colors.amber.shade400,
+              ),
+              iconTheme: IconThemeData(
+                color: Colors.grey.shade100,
+              )),
         ),
-        textTheme: Typography.whiteMountainView,
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
-        primaryColor: const Color(0xFFE9435A),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Color(0xFFE9435A),
-        ),
-        bottomAppBarTheme: BottomAppBarTheme(
-          color: Colors.grey.shade800,
-        ),
-        appBarTheme: AppBarTheme(
-            centerTitle: true,
-            surfaceTintColor: Colors.grey.shade900,
-            backgroundColor: Colors.grey.shade900,
-            elevation: 0,
-            titleTextStyle: const TextStyle(
-                color: Colors.white,
-                fontSize: Sizes.size16 + Sizes.size2,
-                fontWeight: FontWeight.w600),
-            actionsIconTheme: IconThemeData(
-              color: Colors.amber.shade400,
-            ),
-            iconTheme: IconThemeData(
-              color: Colors.grey.shade100,
-            )),
+        //이제 아래가 home임. home 프로퍼티를 지정안하면 에러가 나서 이니셜라우트 해줘야 함.
       ),
-      //이제 아래가 home임. home 프로퍼티를 지정안하면 에러가 나서 이니셜라우트 해줘야 함.
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok/common/widgets/main_navigation/widgets/darkMode_config.dart';
 import 'package:tiktok/common/widgets/main_navigation/widgets/video_config.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -31,12 +32,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
           AnimatedBuilder(
             animation: videoConfig,
             builder: (context, child) => SwitchListTile.adaptive(
-              value: videoConfig.autoMute,
+              value: videoConfig.value,
               onChanged: (value) {
-                videoConfig.toggleAutoMute();
+                videoConfig.value = !videoConfig.value; //해당 화면에서 직접 값을 변경 중
               },
               title: const Text("Mute video"),
               subtitle: const Text("Videos will be muted by default."),
+            ),
+          ),
+          AnimatedBuilder(
+            animation: darkModeConfig,
+            builder: (context, child) => SwitchListTile.adaptive(
+              value: darkModeConfig.value,
+              onChanged: (value) {
+                darkModeConfig.value =
+                    !darkModeConfig.value; //해당 화면에서 직접 값을 변경 중
+              },
+              title: const Text("Dark Mode"),
+              subtitle: const Text("Dark Theme Turns on"),
             ),
           ),
           SwitchListTile.adaptive(
