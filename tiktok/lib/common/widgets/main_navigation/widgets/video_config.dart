@@ -1,4 +1,16 @@
 import 'package:flutter/foundation.dart';
 
-final videoConfig = ValueNotifier(false);
-// 하나의 값에 대한 ChangeNotifier임. false by default.
+class VideoConfig extends ChangeNotifier {
+  bool isMuted = false;
+  bool isAutoplay = false;
+
+  void toggleIsMuted() {
+    isMuted = !isMuted;
+    notifyListeners();
+  }
+
+  void toggleAutoplay() {
+    isAutoplay = !isAutoplay;
+    notifyListeners();
+  }
+}

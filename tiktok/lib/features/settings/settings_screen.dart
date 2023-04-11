@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok/common/widgets/main_navigation/widgets/darkMode_config.dart';
 import 'package:tiktok/common/widgets/main_navigation/widgets/video_config.dart';
 
@@ -28,17 +29,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
-          //아쉽지만, ChangeNotifier은 AnimatedBuilder와 같이 사용되어야 토글을 통해 움직일 수 있다. Flutter의 Docu 찾모
-          AnimatedBuilder(
-            animation: videoConfig,
-            builder: (context, child) => SwitchListTile.adaptive(
-              value: videoConfig.value,
-              onChanged: (value) {
-                videoConfig.value = !videoConfig.value; //해당 화면에서 직접 값을 변경 중
-              },
-              title: const Text("Mute video"),
-              subtitle: const Text("Videos will be muted by default."),
-            ),
+          SwitchListTile.adaptive(
+            value: context.watch<VideoConfig>().isMuted,
+            //watch는 변경된 위젯을 rebuild하고, read로 메소드를 접근해
+            onChanged: (value) => context.read<VideoConfig>().toggleIsMuted(),
+            // 마지막 toggleisMuted 에서 끝에 괄호() 안넣어줬더니 작동안했음. onChange 콜백에서 toggleIsMuted() 메소드를 호출해야 하므로, 괄호를 꼭 포함해야 함!!!!
+            subtitle: const Text("Video Muted by Default"),
           ),
           AnimatedBuilder(
             animation: darkModeConfig,
