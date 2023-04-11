@@ -20,7 +20,7 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   void _onGearPressed() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const SettingScreen(),
+      builder: (context) => const SettingsScreen(),
     ));
   }
 

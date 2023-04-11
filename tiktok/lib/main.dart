@@ -98,4 +98,3 @@ class TikTokApp extends StatelessWidget {
 
 //Dark Mode 방법1. Theme의 모든 디폴트 컬러, background 등 전부 설정해줌.
 //          방법2. 기존 코드 중에 이미 하드 코딩 된 색깔 (회색 같은)이 있다면, MediaQuery 사용
- 
