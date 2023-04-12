@@ -4,12 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok/common/widgets/main_navigation/widgets/video_config.dart';
 import 'package:tiktok/constants/gaps.dart';
-import 'package:tiktok/features/videos/widgets/video_button.dart';
-import 'package:tiktok/features/videos/widgets/video_comments.dart';
+import 'package:tiktok/features/videos/views/widgets/video_button.dart';
+import 'package:tiktok/features/videos/views/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-import '../../../constants/sizes.dart';
+import '../../../../constants/sizes.dart';
 
 class VideoPost extends StatefulWidget {
   final Function onVideoFinished;
