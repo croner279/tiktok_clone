@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok/common/widgets/main_navigation/widgets/darkMode_config.dart';
-import 'package:tiktok/common/widgets/main_navigation/widgets/video_config.dart';
+import 'package:tiktok/features/videos/view_models/playback_config_vm.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -30,11 +30,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           SwitchListTile.adaptive(
-            value: context.watch<VideoConfig>().isMuted,
-            //watch는 변경된 위젯을 rebuild하고, read로 메소드를 접근해
-            onChanged: (value) => context.read<VideoConfig>().toggleIsMuted(),
-            // 마지막 toggleisMuted 에서 끝에 괄호() 안넣어줬더니 작동안했음. onChange 콜백에서 toggleIsMuted() 메소드를 호출해야 하므로, 괄호를 꼭 포함해야 함!!!!
-            subtitle: const Text("Video Muted by Default"),
+            value: context.watch<PlaybackConfigModelViewModel>().muted,
+            onChanged: (value) =>
+                context.read<PlaybackConfigModelViewModel>().setMuted(value),
+            title: const Text("Mute video"),
+            subtitle: const Text("Video will be muted by default."),
+          ),
+          SwitchListTile.adaptive(
+            value: context.watch<PlaybackConfigModelViewModel>().autoplay,
+            onChanged: (value) =>
+                context.read<PlaybackConfigModelViewModel>().setAutoplay(value),
+            title: const Text("Autoplay"),
+            subtitle: const Text("Video will start playing automatically."),
           ),
           AnimatedBuilder(
             animation: darkModeConfig,
