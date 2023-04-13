@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tiktok/common/widgets/main_navigation/widgets/video_config.dart';
 import 'package:tiktok/constants/gaps.dart';
+import 'package:tiktok/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok/features/videos/views/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
@@ -36,6 +36,7 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  bool _isMuted = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -71,7 +72,32 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
+
+    _initMuted();
+
+    context
+        .read<PlaybackConfigModelViewModel>()
+        .addListener(_onPlaybackConfigChanged);
   }
+
+  void _initMuted() {
+    final isMuted = context.read<PlaybackConfigModelViewModel>().muted;
+    _setMuted(isMuted);
+    setState(() {
+      _isMuted = isMuted;
+    });
+  }
+
+  void _setMuted(bool isMuted) => isMuted
+      ? _videoPlayerController.setVolume(0)
+      : _videoPlayerController.setVolume(1);
+  void _toggleMuted() {
+    _setMuted(!_isMuted);
+    setState(() {
+      _isMuted = !_isMuted;
+    });
+  }
+
   /*    _animationController.addListener(() {
       setState(
           () {}); 
@@ -93,13 +119,27 @@ class _VideoPostState extends State<VideoPost>
 //그래서 value.isPlaying을 불러오지 못하고, play 등을 호출하지 못함.  그래서 조건문을 추가.
 // Widget이 mount 되었는지를 알려줌. mount false면 widget이 widget Tree에서 제외되어 있다는 뜻
 
+  void _onPlaybackConfigChanged() {
+    //바로 아래 코드 없으면 mute 설정시에 오류가 발생하는데, 죽은 영상의 변경사항을 listen하고 있기 떄문.
+    if (!mounted) return;
+    final muted = context.read<PlaybackConfigModelViewModel>().muted;
+    if (muted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
+    }
+  }
+
   void _onVisibilityChanged(VisibilityInfo info) {
 // mount 된 상태가 아니라면 visibility에 변화가 있더라도 아무 것도 반환하지 말아라.
     if (!mounted) return;
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      _videoPlayerController.play();
+      final autoplay = context.read<PlaybackConfigModelViewModel>().autoplay;
+      if (autoplay) {
+        _videoPlayerController.play();
+      }
     }
     // 영상이 100% visible(화면이 100% 틀어져 있을 때) + video가 재생이 안되고 있다면 video를 플레이.
     // 새로고침하고 놔두면 다시 재생이 됨...
@@ -185,13 +225,11 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              icon: FaIcon(
-                false
-                    ? FontAwesomeIcons.volumeOff
-                    : FontAwesomeIcons.volumeHigh,
+              onPressed: _toggleMuted,
+              icon: Icon(
+                _isMuted ? Icons.volume_off : Icons.volume_up_rounded,
                 color: Colors.white,
               ),
-              onPressed: () {},
             ),
           ),
           const Positioned(
