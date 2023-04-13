@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok/constants/gaps.dart';
-import 'package:tiktok/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok/features/videos/views/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
@@ -72,20 +70,6 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
-
-    _initMuted();
-
-    context
-        .read<PlaybackConfigModelViewModel>()
-        .addListener(_onPlaybackConfigChanged);
-  }
-
-  void _initMuted() {
-    final isMuted = context.read<PlaybackConfigModelViewModel>().muted;
-    _setMuted(isMuted);
-    setState(() {
-      _isMuted = isMuted;
-    });
   }
 
   void _setMuted(bool isMuted) => isMuted
@@ -122,8 +106,8 @@ class _VideoPostState extends State<VideoPost>
   void _onPlaybackConfigChanged() {
     //바로 아래 코드 없으면 mute 설정시에 오류가 발생하는데, 죽은 영상의 변경사항을 listen하고 있기 떄문.
     if (!mounted) return;
-    final muted = context.read<PlaybackConfigModelViewModel>().muted;
-    if (muted) {
+
+    if (false) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -136,8 +120,7 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      final autoplay = context.read<PlaybackConfigModelViewModel>().autoplay;
-      if (autoplay) {
+      if (false) {
         _videoPlayerController.play();
       }
     }

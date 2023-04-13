@@ -30,16 +30,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           SwitchListTile.adaptive(
-            value: context.watch<PlaybackConfigModelViewModel>().muted,
-            onChanged: (value) =>
-                context.read<PlaybackConfigModelViewModel>().setMuted(value),
+            value: false,
+            onChanged: (value) => {},
             title: const Text("Mute video"),
             subtitle: const Text("Video will be muted by default."),
           ),
           SwitchListTile.adaptive(
-            value: context.watch<PlaybackConfigModelViewModel>().autoplay,
-            onChanged: (value) =>
-                context.read<PlaybackConfigModelViewModel>().setAutoplay(value),
+            value: false,
+            onChanged: (value) => {},
             title: const Text("Autoplay"),
             subtitle: const Text("Video will start playing automatically."),
           ),
