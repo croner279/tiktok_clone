@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok/constants/gaps.dart';
+import 'package:tiktok/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok/features/videos/views/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
@@ -9,7 +11,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../../constants/sizes.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
 
   final int index;
@@ -21,10 +23,10 @@ class VideoPost extends StatefulWidget {
   });
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
+class VideoPostState extends ConsumerState<VideoPost>
     with SingleTickerProviderStateMixin {
   //with는 그 클래스의 메서드와 속성 전부 가져오는 것(클래스 복사하기)
   late final VideoPlayerController _videoPlayerController;
@@ -107,7 +109,7 @@ class _VideoPostState extends State<VideoPost>
     //바로 아래 코드 없으면 mute 설정시에 오류가 발생하는데, 죽은 영상의 변경사항을 listen하고 있기 떄문.
     if (!mounted) return;
 
-    if (false) {
+    if (ref.read(playbackConfigProvider).muted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
@@ -120,7 +122,7 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      if (false) {
+      if (ref.watch(playbackConfigProvider).autoplay) {
         _videoPlayerController.play();
       }
     }
@@ -208,9 +210,11 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              onPressed: _toggleMuted,
+              onPressed: _onPlaybackConfigChanged,
               icon: Icon(
-                _isMuted ? Icons.volume_off : Icons.volume_up_rounded,
+                ref.watch(playbackConfigProvider).muted
+                    ? Icons.volume_off
+                    : Icons.volume_up_rounded,
                 color: Colors.white,
               ),
             ),
